@@ -10,7 +10,7 @@ function makeConn() {
          PDO::ERRMODE_EXCEPTION
       );
    } catch(PDOException $e) {
-      die($e->getMessage());
+      die('{"error":"'.$e->getMessage().'"}');
    }
    return $conn;
 }
@@ -55,7 +55,7 @@ function makeStatement($data) {
    $p = $data->params;
 
    switch($t) {
-      
+
       case "users_all":
          return makeQuery($c,"SELECT * FROM `track_users`",$p);
       case "animals_all":
@@ -64,6 +64,23 @@ function makeStatement($data) {
          return makeQuery($c,"SELECT * FROM `track_locations`",$p);
 
 
+      case "user_by_id":
+         return makeQuery($c,"SELECT * FROM `track_users` WHERE `id`=?",$p);
+      case "animal_by_id":
+         return makeQuery($c,"SELECT * FROM `track_animals` WHERE `id`=?",$p);
+      case "location_by_id":
+         return makeQuery($c,"SELECT * FROM `track_locations` WHERE `id`=?",$p);
+
+
+      case "animals_by_user_id":
+         return makeQuery($c,"SELECT * FROM `track_animals` WHERE `user_id`=?",$p);
+      case "locations_by_animal_id":
+         return makeQuery($c,"SELECT * FROM `track_locations` WHERE `animal_id`=?",$p);
+
+
+      case "check_signin":
+         return makeQuery($c,"SELECT * FROM `track_users` WHERE `username`=? AND `password`=md5(?)",$p);
+
 
       default: return ["error"=>"No Matched Type"];
    }
@@ -71,11 +88,9 @@ function makeStatement($data) {
 
 
 
-$type = isset($_GET['type']) ? $_GET['type'] : '';
+$data = json_decode(file_get_contents("php://input"));
 
 echo json_encode(
-   makeStatement(
-      (object)["type"=>$type,"params"=>[]]
-   ),
+   makeStatement($data),
    JSON_NUMERIC_CHECK
 );
