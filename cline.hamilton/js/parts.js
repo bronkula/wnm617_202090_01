@@ -16,9 +16,12 @@ const makeUserProfile = templater(o=>`
    <div class="user-profile-image">
       <img src="${o.img}" alt="">
    </div>
-   <h2>${o.name}</h2>
-   <h3>@${o.username}</h3>
-   <div><a href="#user-settings-page">Settings</a></div>
+   <div style="padding:1em">
+      <h2>${o.name}</h2>
+      <h3>@${o.username}</h3>
+      <h3>${o.email}</h3>
+      <div class="floater top right" style="font-size:1.25em"><a href="#user-settings-page">&equiv;</a></div>
+   </div>
    `);
 
 const makeAnimalProfile = templater(o=>`
@@ -30,6 +33,7 @@ const makeAnimalProfile = templater(o=>`
    <div>Type ${o.type}</div>
    <div>Breed ${o.breed}</div>
    <div><p>${o.description}</p></div>
+   <div><a href="#" class="js-animal-delete" data-id="${o.id}">Delete</a></div></div>
 </div>`);
 
 
@@ -60,7 +64,7 @@ const FormControl = ({namespace,name,displayname,type,placeholder,value}) => {
    </div>`;
 }
 
-const makeUserProfileUpdateForm = o => `
+const makeUserEditForm = o => `
 ${FormControl({
    namespace:'user-edit',
    name:'username',
@@ -90,7 +94,7 @@ ${FormControl({
 
 
 
-const makeAnimalProfileUpdateForm = o => `
+const makeAnimalEditForm = o => `
 <!--<div class="user-profile-image">
    <img src="${o.img}">
 </div>-->
