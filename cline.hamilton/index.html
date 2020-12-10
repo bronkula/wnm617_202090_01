@@ -384,7 +384,12 @@
             <form id="animal-add-form" data-ajax="false" style="padding:1em">
             
                <input type="hidden" id="animal-add-destination" value="#list-page">
-            
+
+               <input type="hidden" id="animal-add-image">
+               <label class="image-uploader thumbnail">
+                  <input type="file" data-role="none" id="animal-add-upload">
+               </label>
+
                <div class="form-control">
                   <label for="animal-add-name" class="form-label">Name</label>
                   <input id="animal-add-name" type="text" class="form-input" data-role="none">
