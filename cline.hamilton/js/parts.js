@@ -142,7 +142,7 @@ const drawAnimalList = (a,empty_phrase="No animals yet, you should add some.") =
 
 
 
-const capitalize = s => s[0].toUpperCase()+s.substr(1);
+const capitalize = s => s=='' ? '' : s[0].toUpperCase()+s.substr(1);
 
 const filterList = (animals,type) => {
    let a = [...(new Set(animals.map(o=>o[type])))];
